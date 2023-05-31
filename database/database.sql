@@ -12,7 +12,7 @@ CREATE TABLE users (
 INSERT INTO users (Username, Password) VALUES ("admin", "$2y$10$WgL2d2fzi6IiGiTfXvdBluTLlMroU8zBtIcRut7SzOB6j9i/LbA4K");
 
 CREATE TABLE students (
-	id int PRIMARY KEY auto_increment,
+	id INT PRIMARY KEY,
 	fullname varchar(255),
 	birthday DATETIME,
 	age varchar(255),
@@ -22,10 +22,11 @@ CREATE TABLE students (
 	phone varchar(255)
 );
 
-CREATE TABLE violence (
-	id int PRIMARY KEY auto_increment,
-	student_id varchar(255),
-	TypeOffense varchar(255),
-	Offense varchar(255),
-	LevelOffense varchar(255)
+CREATE TABLE violations (
+	id INT PRIMARY KEY auto_increment,
+	student_id INT,
+	type varchar(255),
+	offense varchar(255),
+	level varchar(255),
+	FOREIGN KEY (student_id) REFERENCES students (id)
 );

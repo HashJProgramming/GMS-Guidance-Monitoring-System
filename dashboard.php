@@ -80,7 +80,7 @@ include_once "functions/authentication.php";
                         <div>
                             <h6 class="text-uppercase text-muted">INFORMATION</h6>
                             <h4 class="display-6 fw-bold">REPORTS</h4>
-                            <hr><a class="btn btn-primary d-block w-100" role="button" href="#">PRINT</a>
+                            <hr><a class="btn btn-primary d-block w-100" role="button" target="_blank" href="print/">PRINT</a>
                             <hr>
                         </div><a class="btn btn-primary d-block w-100" role="button" href="reports.php">VIEW</a>
                     </div>
@@ -100,9 +100,8 @@ include_once "functions/authentication.php";
                     <h4 class="modal-title">Create Student</h4><button class="btn-close" type="button" aria-label="Close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <form class="text-center" method="post">
-                        <div class="mb-3"><input class="form-control" type="text" name="username" placeholder="Username"></div>
-                        <div class="mb-3"><input class="form-control" type="password" name="password" placeholder="Password"></div>
+                    <form class="text-center" action="functions/create-student.php" method="post">
+                        <div class="mb-3"><input class="form-control" type="text" name="student_id" placeholder="Student ID"></div>
                         <div class="mb-3"><input class="form-control" type="text" name="fullname" placeholder="Fullname"></div>
                         <div class="mb-3"><input class="form-control" name="birthday" placeholder="Username" type="date"></div>
                         <div class="mb-3">
@@ -130,9 +129,8 @@ include_once "functions/authentication.php";
                     <h4 class="modal-title">Update Student</h4><button class="btn-close" type="button" aria-label="Close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <form class="text-center" method="post">
-                        <div class="mb-3"><input class="form-control" type="text" name="username" placeholder="Username"></div>
-                        <div class="mb-3"><input class="form-control" type="password" name="password" placeholder="Password"></div>
+                    <form class="text-center" action="functions/update-student.php" method="post">
+                        <input type="hidden" name="data_id">
                         <div class="mb-3"><input class="form-control" type="text" name="fullname" placeholder="Fullname"></div>
                         <div class="mb-3"><input class="form-control" name="birthday" placeholder="Username" type="date"></div>
                         <div class="mb-3">
@@ -160,20 +158,19 @@ include_once "functions/authentication.php";
                     <h4 class="modal-title">Add Violation</h4><button class="btn-close" type="button" aria-label="Close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <form class="text-center" method="post">
+                    <form class="text-center" action="functions/create-violation.php" method="post">
                         <div class="mb-3"><input class="form-control" type="text" name="id" placeholder="Student ID"></div>
-                        <div class="mb-3"><input class="form-control" name="birthday" placeholder="Username" type="date"></div>
-                        <div id="floating-label-1" class="form-floating mb-3"><select class="form-select form-select" for="floatinginput" placeholder="HGsOFT">
-                                <option value="1">Major</option>
-                                <option value="2">Minor</option>
+                        <div id="floating-label-1" class="form-floating mb-3"><select name="type" class="form-select form-select" for="floatinginput" placeholder="Major">
+                                <option value="Major">Major</option>
+                                <option value="Minor">Minor</option>
                             </select><label class="form-label" id="floating-label-2" for="floatinginput">Select Type...</label></div>
-                        <div id="floating-label-3" class="form-floating mb-3"><select class="form-select form-select" for="floatinginput" placeholder="HGsOFT">
-                                <option value="1">1st Offense</option>
-                                <option value="2">2nd Offense</option>
-                                <option value="3">3rd Offense</option>
-                                <option value="4">Candidate for Expulsion</option>
+                        <div id="floating-label-3" class="form-floating mb-3"><select name="level" class="form-select form-select" for="floatinginput" placeholder="1st Offense">
+                                <option value="1st Offense">1st Offense</option>
+                                <option value="2nd Offense">2nd Offense</option>
+                                <option value="3rd Offense">3rd Offense</option>
+                                <option value="Candidate for Expulsion">Candidate for Expulsion</option>
                             </select><label class="form-label" id="floating-label-4" for="floatinginput">Select Level...</label></div>
-                        <div class="mb-3"><textarea class="form-control" placeholder="Offense"></textarea></div>
+                        <div class="mb-3"><textarea class="form-control" placeholder="Offense" name="offense"></textarea></div>
                         <div class="mb-3"><button class="btn btn-primary d-block w-100" type="submit">Add Violation</button></div>
                     </form>
                 </div>
@@ -213,17 +210,7 @@ include_once "functions/authentication.php";
                                                 </tr>
                                             </thead>
                                             <tbody class="text-center">
-                                                <tr>
-                                                    <td>01</td>
-                                                    <td>Ana</td>
-                                                    <td>5/31/2023</td>
-                                                    <td>17</td>
-                                                    <td>Male</td>
-                                                    <td>BSIT</td>
-                                                    <td>Diseño</td>
-                                                    <td>Diseño</td>
-                                                    <td class="text-center align-middle" style="max-height: 60px;height: 60px;"><a class="btn btnMaterial btn-flat success semicircle" role="button" href="#" data-bs-target="#update" data-bs-toggle="modal"><i class="fas fa-pen"></i></a><a class="btn btnMaterial btn-flat accent btnNoBorders checkboxHover" role="button" style="margin-left: 5px;" data-bs-toggle="modal" data-bs-target="#confirmation" href="#"><i class="fas fa-trash btnNoBorders" style="color: #DC3545;"></i></a></td>
-                                                </tr>
+                                                    <?php include_once 'functions/view-students.php';?>
                                             </tbody>
                                         </table>
                                     </div>
@@ -270,19 +257,7 @@ include_once "functions/authentication.php";
                                                 </tr>
                                             </thead>
                                             <tbody class="text-center">
-                                                <tr>
-                                                    <td>01</td>
-                                                    <td>01</td>
-                                                    <td>Ana</td>
-                                                    <td>17</td>
-                                                    <td>Male</td>
-                                                    <td>BSIT</td>
-                                                    <td>Diseño</td>
-                                                    <td>000000</td>
-                                                    <td>Major</td>
-                                                    <td>Bullying</td>
-                                                    <td>1st Offense</td>
-                                                </tr>
+                                                <?php include_once 'functions/view-violations.php';?>
                                             </tbody>
                                         </table>
                                     </div>
@@ -298,23 +273,78 @@ include_once "functions/authentication.php";
     <div class="modal fade" role="dialog" tabindex="-1" id="confirmation">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
+                <form action="functions/remove-student.php" method="post">
+                <input type="hidden" name="data_id">
                 <div class="modal-header">
                     <h4 class="modal-title">Remove Student</h4><button class="btn-close" type="button" aria-label="Close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
                     <p>Are you sure you want to remove this student?</p>
                 </div>
-                <div class="modal-footer"><button class="btn btn-light" type="button" data-bs-dismiss="modal">Close</button><button class="btn btn-danger" type="button">Remove</button></div>
+                <div class="modal-footer"><button class="btn btn-light" type="button" data-bs-dismiss="modal">Close</button><button class="btn btn-danger" type="submit">Remove</button></div>
+                </form>
             </div>
         </div>
     </div>
+    <script src="assets/js/jquery.min.js"></script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script>
+        $('a[data-bs-target="#update"]').on('click', function() {
+            var id = $(this).data('id');
+            var fullname = $(this).data('fullname');
+            var birthdate = $(this).data('birthdate');
+            var age = $(this).data('age');
+            var sex = $(this).data('sex');
+            var strand = $(this).data('strand');
+            var guardian_name = $(this).data('gurdian');
+            var phone = $(this).data('phone');
+
+            console.log(id);
+            
+            $('input[name="data_id"]').each(function() {
+                $(this).val(id);
+            });
+
+            $('input[name="fullname"]').each(function() {
+                $(this).val(fullname);
+            });
+
+            $('input[name="birthday"]').each(function() {
+                $(this).val(birthdate);
+            });
+
+            $('input[name="age"]').each(function() {
+                $(this).val(age);
+            });
+
+            $('input[name="gender"]').each(function() {
+                $(this).val(sex);
+            });
+
+            $('input[name="strand"]').each(function() {
+                $(this).val(strand);
+            });
+
+            $('input[name="guardian_name"]').each(function() {
+                $(this).val(guardian_name);
+            });
+
+            $('input[name="guardian_phone"]').each(function() {
+                $(this).val(phone);
+            });
+        });
+        $('a[data-bs-target="#confirmation"]').on('click', function() {
+            var id = $(this).data('id');
+            console.log(id);
+            $('input[name="data_id"]').each(function() {
+                $(this).val(id);
+            });
+        });
+    </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.2/js/jquery.tablesorter.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.2/js/widgets/widget-filter.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.2/js/widgets/widget-storage.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-    <script src="assets/js/Ludens---1-Index-Table-with-Search--Sort-Filters-v20-Ludens---1-Index-Table-with-Search--Sort-Filters.js"></script>
-    <script src="assets/js/Ludens---1-Index-Table-with-Search--Sort-Filters-v20-Ludens---Material-UI-Actions.js"></script>
 </body>
 
 </html>
