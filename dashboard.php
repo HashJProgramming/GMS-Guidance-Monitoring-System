@@ -233,7 +233,7 @@ include_once "functions/authentication.php";
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-12 col-sm-6 col-md-6">
-                                <h3 class="text-dark mb-4">Violation List List</h3>
+                                <h3 class="text-dark mb-4">Violation List</h3>
                             </div>
                         </div>
                         <div class="card" id="TableSorterCard-1">
