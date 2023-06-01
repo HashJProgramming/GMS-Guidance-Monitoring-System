@@ -61,13 +61,13 @@ th, td {
   text-transform: uppercase;
   text-decoration: none;
   color: #fff;
-  background: #1485CC;
-  box-shadow: 0 5px 0 rgba(20,133,204,0.6);
+  background: #cc2014;
+  box-shadow: 0 5px 0 rgba(204, 20, 20, 0.6);
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
 }
 .button:hover {
-  background: #0971B2;
-  box-shadow: 0 5px 0 rgba(9,113,178,0.6);
+  background: #b20909;
+  box-shadow: 0 5px 0 rgba(178, 9, 9, 0.6);
 }
