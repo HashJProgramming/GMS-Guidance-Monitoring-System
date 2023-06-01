@@ -10,8 +10,8 @@ include_once "functions/authentication.php";
     <title>Home - GSM - Guidance Monitoring System</title>
     <meta name="description" content="GSM - Guidance Monitoring System">
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/css/Catamaran.css">
-    <link rel="stylesheet" href="assets/css/Lato.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i&amp;display=swap">
     <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.2/css/theme.bootstrap_4.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
@@ -25,6 +25,7 @@ include_once "functions/authentication.php";
         <div class="container"><a class="navbar-brand" href="#">GMS - Guidance Monitoring System</a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navbarResponsive"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="dashboard.php">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="functions/user-logout.php">logout</a></li>
                 </ul>
             </div>
@@ -45,44 +46,79 @@ include_once "functions/authentication.php";
     <div class="container py-4 py-xl-5">
         <div class="row mb-5">
             <div class="col-md-8 col-xl-6 text-center mx-auto">
-                <h2>OPTIONS</h2>
+                <h2>Violation Page</h2>
                 <p>GSM - GUIDANCE MONITORING SYSTEM</p>
             </div>
         </div>
-        <div class="row gy-4 row-cols-1 row-cols-md-2 row-cols-xl-3">
-            <div class="col">
-                <div class="card border-primary border-2 h-100">
-                    <div class="card-body d-flex flex-column justify-content-between p-4"><span class="badge bg-primary position-absolute top-0 end-0 rounded-bottom-left text-uppercase">GMS</span>
-                        <div>
-                            <h6 class="text-uppercase text-muted">INFORMATION</h6>
-                            <h4 class="display-6 fw-bold">VIOLATIONS</h4>
-                            <hr><a class="btn btn-primary d-block w-100" role="button" href="#" data-bs-target="#violation" data-bs-toggle="modal">ADD</a>
-                            <hr>
-                        </div><a class="btn btn-primary d-block w-100" role="button" href="#" data-bs-target="#view-violations" data-bs-toggle="modal">VIEW</a>
-                    </div>
-                </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 col-sm-6 col-md-6">
+                <h3 class="text-dark mb-4">Violation List</h3>
             </div>
             <div class="col">
-                <div class="card h-100">
-                    <div class="card-body d-flex flex-column justify-content-between p-4">
-                        <div>
-                            <h6 class="text-uppercase text-muted">INFORMATION</h6>
-                            <h4 class="display-6 fw-bold">STUDENTS</h4>
-                            <hr><a class="btn btn-primary d-block w-100" role="button" href="#" data-bs-target="#register" data-bs-toggle="modal">ADD</a>
-                            <hr>
-                        </div><a class="btn btn-primary d-block w-100" role="button" href="#" data-bs-target="#view-students" data-bs-toggle="modal">VIEW</a>
+                <form action="functions/violation-search.php" method="post">
+                    <div class="input-group"><span class="input-group-text">Student ID</span>
+                        <input class="form-control" type="text" name="student_id"/>
+                        <button class="btn btn-primary" type="submit">Search</button></div>
                     </div>
-                </div>
+                </form>
             </div>
-            <div class="col">
-                <div class="card h-100">
-                    <div class="card-body d-flex flex-column justify-content-between p-4">
-                        <div>
-                            <h6 class="text-uppercase text-muted">INFORMATION</h6>
-                            <h4 class="display-6 fw-bold">REPORTS</h4>
-                            <hr><a class="btn btn-primary d-block w-100" role="button" target="_blank" href="print/">PRINT</a>
-                            <hr>
-                        </div><a class="btn btn-primary d-block w-100" role="button" href="reports.php">VIEW</a>
+        </div>
+        <div class="card" id="TableSorterCard-2">
+            <div class="row">
+                <div class="col-12">
+                    <div class="table-responsive">
+                        <table class="table table-striped table tablesorter" id="ipi-table">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th class="text-center">VIOLATION&nbsp;id</th>
+                                    <th class="text-center">student id</th>
+                                    <th class="text-center">fullname</th>
+                                    <th class="text-center">age</th>
+                                    <th class="text-center">sex</th>
+                                    <th class="text-center">strand</th>
+                                    <th class="text-center">Guardian</th>
+                                    <th class="text-center filter-false sorter-false">phone</th>
+                                    <th class="text-center filter-false sorter-false">type</th>
+                                    <th class="text-center filter-false sorter-false">offense</th>
+                                    <th class="text-center filter-false sorter-false">level</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-center">
+                            <?php
+                                include 'functions/get-data.php';
+
+                                // Connect to the database
+                                $db = new PDO('mysql:host=localhost;dbname=db_hashers', 'root', '');
+
+                                if(isset($_GET['student_id'])){
+                                    $sql = 'SELECT * FROM violations WHERE student_id = "'.$_GET['student_id'].'"';
+
+                                    $stmt = $db->prepare($sql);
+                                    $stmt->execute();
+                                    $results = $stmt->fetchAll();
+
+                                    // Loop through the results and add them to the table 
+                                    foreach ($results as $row) {
+                                    ?>
+                                        <tr>
+                                            <td class="border-0 align-middle"><strong><?php echo $row['id']; ?></strong></td>
+                                            <?php
+                                                get_student($row['student_id']);
+                                            ?>
+                                                <td class="border-0 align-middle"><strong><?php echo $row['type']; ?></strong></td>
+                                                <td class="border-0 align-middle"><strong><?php echo $row['offense']; ?></strong></td>
+                                                <td class="border-0 align-middle"><strong><?php echo $row['level']; ?></strong></td>
+                                        </tr>
+                                        
+                                    <?php
+                                    }
+
+                                }
+                                ?>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
