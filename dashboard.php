@@ -427,7 +427,7 @@ include_once 'functions/get-data.php';
         var win = window.open("about:blank");
 
         // Set the window's content
-        win.document.write('<html><head><link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">' +
+        win.document.write('<html><head><title>PRINT</title><link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">' +
                            '<style>table {border-collapse: collapse; width: 100%;}' +
                            'th, td {border: 1px solid black; padding: 8px; text-align: left;}' +
                            'th {background-color: #dddddd;}</style></head><body>' +
