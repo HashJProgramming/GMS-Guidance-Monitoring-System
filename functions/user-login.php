@@ -23,5 +23,5 @@ $stmt->execute();
     header('location: ../dashboard.php');
 } else {
     // Show an error message
-    header('location: ../index.php');
+    header('location: ../index.php#error');
 }

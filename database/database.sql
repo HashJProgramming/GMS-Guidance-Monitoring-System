@@ -14,12 +14,12 @@ INSERT INTO users (Username, Password) VALUES ("admin", "$2y$10$WgL2d2fzi6IiGiTf
 CREATE TABLE students (
 	id INT PRIMARY KEY,
 	fullname varchar(255),
-	birthday DATETIME,
+	birthday DATE,
 	age varchar(255),
 	sex varchar(255),
 	strand varchar(255),
 	guardian_name varchar(255),
-	phone varchar(255)
+	phone varchar(255),
 );
 
 CREATE TABLE violations (
@@ -27,6 +27,6 @@ CREATE TABLE violations (
 	student_id INT,
 	type varchar(255),
 	offense varchar(255),
-	level varchar(255),
+	level INT,
 	FOREIGN KEY (student_id) REFERENCES students (id)
 );

@@ -17,6 +17,19 @@ if ($stmt->rowCount() === 0) {
   exit;
 }
 
+// Check if the user exists
+$sql = "SELECT * FROM violations WHERE student_id = :id";
+$stmt = $db->prepare($sql);
+$stmt->bindParam(':id', $id);
+$stmt->execute();
+
+if ($stmt->rowCount() > 0) {
+  $sql = "DELETE FROM violations WHERE student_id = :id";
+  $stmt = $db->prepare($sql);
+  $stmt->bindParam(':id', $id);
+  $stmt->execute();
+}
+
 // Remove the user from the database 
 $sql = "DELETE FROM students WHERE id = :id";
 $stmt = $db->prepare($sql);
@@ -24,6 +37,6 @@ $stmt->bindParam(':id', $id);
 $stmt->execute();
 
 // Redirect the user to the home page
-header('Location: ../dashboard.php');
+header('Location: ../dashboard.php#success');
 
 ?>

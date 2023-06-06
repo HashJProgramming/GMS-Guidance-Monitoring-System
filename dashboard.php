@@ -1,5 +1,6 @@
 <?php
 include_once "functions/authentication.php";
+include_once 'functions/get-data.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -46,7 +47,6 @@ include_once "functions/authentication.php";
         <div class="row mb-5">
             <div class="col-md-8 col-xl-6 text-center mx-auto">
                 <h2>OPTIONS</h2>
-                <p>GSM - GUIDANCE MONITORING SYSTEM</p>
             </div>
         </div>
         <div class="row gy-4 row-cols-1 row-cols-md-2 row-cols-xl-3">
@@ -101,20 +101,26 @@ include_once "functions/authentication.php";
                 </div>
                 <div class="modal-body">
                     <form class="text-center" action="functions/create-student.php" method="post">
-                        <div class="mb-3"><input class="form-control" type="text" name="student_id" placeholder="Student ID"></div>
-                        <div class="mb-3"><input class="form-control" type="text" name="fullname" placeholder="Fullname"></div>
-                        <div class="mb-3"><input class="form-control" name="birthday" placeholder="Username" type="date"></div>
+                        <div class="mb-3"><input class="form-control" required  type="text"  pattern="^(?!\s).*$"name="student_id" placeholder="Student ID"></div>
+                        <div class="mb-3"><input class="form-control" required  type="text"  pattern="^(?!\s).*$"name="fullname" placeholder="Fullname"></div>
+                      <div class="md-3" style="margin-bottom: 1rem;">
+                          <div class="input-group"><span class="input-group-text">Birthdate</span><input class="form-control" required  name="birthday" placeholder="birthday" type="date"></div>
+                      </div>
                         <div class="mb-3">
                             <div class="container">
                                 <div class="row">
-                                    <div class="col-md-6 col-xl-6"><input class="form-control" type="text" name="age" placeholder="Age"></div>
-                                    <div class="col-md-6 col-xl-6"><input class="form-control" type="text" name="gender" placeholder="Sex"></div>
+                                    <select class="form-select" name="gender">
+                                            <optgroup label="Sex">
+                                                <option value="Male" selected>Male</option>
+                                                <option value="Female">Female</option>
+                                            </optgroup>
+                                    </select>
                                 </div>
                             </div>
                         </div>
-                        <div class="mb-3"><input class="form-control" type="text" name="strand" placeholder="Strand"></div>
-                        <div class="mb-3"><input class="form-control" type="text" name="guardian_name" placeholder="Guardian Name"></div>
-                        <div class="mb-3"><input class="form-control" type="text" name="guardian_phone" placeholder="Guardian Phone"></div>
+                        <div class="mb-3"><input class="form-control" required  type="text"  pattern="^(?!\s).*$"name="strand" placeholder="Strand"></div>
+                        <div class="mb-3"><input class="form-control" required  type="text"  pattern="^(?!\s).*$"name="guardian_name" placeholder="Guardian Name"></div>
+                        <div class="mb-3"><input class="form-control" required  type="tel"  maxlength="11"  pattern="[0-9]+" name="guardian_phone" placeholder="Guardian Phone"></div>
                         <div class="mb-3"><button class="btn btn-primary d-block w-100" type="submit">Add Student</button></div>
                     </form>
                 </div>
@@ -131,19 +137,23 @@ include_once "functions/authentication.php";
                 <div class="modal-body">
                     <form class="text-center" action="functions/update-student.php" method="post">
                         <input type="hidden" name="data_id">
-                        <div class="mb-3"><input class="form-control" type="text" name="fullname" placeholder="Fullname"></div>
-                        <div class="mb-3"><input class="form-control" name="birthday" placeholder="Username" type="date"></div>
+                        <div class="mb-3"><input class="form-control" required  type="text"  pattern="^(?!\s).*$"name="fullname" placeholder="Fullname"></div>
+                        <div class="mb-3"><input class="form-control" required  name="birthday" placeholder="Username" type="date"></div>
                         <div class="mb-3">
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-md-6 col-xl-6"><input class="form-control" type="text" name="age" placeholder="Age"></div>
-                                    <div class="col-md-6 col-xl-6"><input class="form-control" type="text" name="gender" placeholder="Sex"></div>
-                                </div>
-                            </div>
+
+                        <div class="mb-3">
+                            <select class="form-select" name="gender">
+                                <optgroup label="Sex">
+                                    <option value="Male" selected>Male</option>
+                                    <option value="Female">Female</option>
+                                </optgroup>
+                            </select>
                         </div>
-                        <div class="mb-3"><input class="form-control" type="text" name="strand" placeholder="Strand"></div>
-                        <div class="mb-3"><input class="form-control" type="text" name="guardian_name" placeholder="Guardian Name"></div>
-                        <div class="mb-3"><input class="form-control" type="text" name="guardian_phone" placeholder="Guardian Phone"></div>
+
+                        </div>
+                        <div class="mb-3"><input class="form-control" required  type="text"  pattern="^(?!\s).*$" name="strand" placeholder="Strand"></div>
+                        <div class="mb-3"><input class="form-control" required  type="text"  pattern="^(?!\s).*$" name="guardian_name" placeholder="Guardian Name"></div>
+                        <div class="mb-3"><input class="form-control" required  type="tel" minlength="11" maxlength="11"  pattern="[0-9]+" name="guardian_phone" placeholder="Guardian Phone"></div>
                         <div class="mb-3"><button class="btn btn-primary d-block w-100" type="submit">Update Student</button></div>
                     </form>
                 </div>
@@ -159,18 +169,12 @@ include_once "functions/authentication.php";
                 </div>
                 <div class="modal-body">
                     <form class="text-center" action="functions/create-violation.php" method="post">
-                        <div class="mb-3"><input class="form-control" type="text" name="id" placeholder="Student ID"></div>
+                        <div class="mb-3"><input class="form-control" required  type="text"  pattern="^(?!\s).*$"name="id" placeholder="Student ID"></div>
                         <div id="floating-label-1" class="form-floating mb-3"><select name="type" class="form-select form-select" for="floatinginput" placeholder="Major">
                                 <option value="Major">Major</option>
                                 <option value="Minor">Minor</option>
                             </select><label class="form-label" id="floating-label-2" for="floatinginput">Select Type...</label></div>
-                        <div id="floating-label-3" class="form-floating mb-3"><select name="level" class="form-select form-select" for="floatinginput" placeholder="1st Offense">
-                                <option value="1st Offense">1st Offense</option>
-                                <option value="2nd Offense">2nd Offense</option>
-                                <option value="3rd Offense">3rd Offense</option>
-                                <option value="Candidate for Expulsion">Candidate for Expulsion</option>
-                            </select><label class="form-label" id="floating-label-4" for="floatinginput">Select Level...</label></div>
-                        <div class="mb-3"><textarea class="form-control" placeholder="Offense" name="offense"></textarea></div>
+                        <div class="mb-3"><textarea class="form-control" required  placeholder="Offense" name="offense"></textarea></div>
                         <div class="mb-3"><button class="btn btn-primary d-block w-100" type="submit">Add Violation</button></div>
                     </form>
                 </div>
@@ -191,10 +195,12 @@ include_once "functions/authentication.php";
                                 <h3 class="text-dark mb-4">Students List</h3>
                             </div>
                             <div class="col">
-                                <form action="functions/student-search.php" method="post">
-                                    <div class="input-group"><span class="input-group-text">Student ID</span>
-                                        <input class="form-control" type="text" name="student_id"/>
-                                        <button class="btn btn-primary" type="submit">Search</button></div> 
+                                <form id="search-form" method="POST">
+                                    <div class="input-group">
+                                        <span class="input-group-text">Student</span>
+                                        <input class="form-control"  type="text" name="student_id" pattern="^(?!\s).*$">
+                                        <button class="btn btn-primary" type="submit">Search</button>
+                                    </div>
                                 </form>
                             </div>
                         </div>
@@ -202,22 +208,22 @@ include_once "functions/authentication.php";
                             <div class="row">
                                 <div class="col-12">
                                     <div class="table-responsive">
-                                        <table class="table table-striped table tablesorter" id="ipi-table">
+                                        <table class="table table-striped tablesorter" id="ipi-table">
                                             <thead class="thead-dark">
                                                 <tr>
-                                                    <th class="text-center">student id</th>
-                                                    <th class="text-center">fullname</th>
-                                                    <th class="text-center">birthday</th>
-                                                    <th class="text-center">age</th>
-                                                    <th class="text-center">sex</th>
-                                                    <th class="text-center">strand</th>
+                                                    <th class="text-center">Student ID</th>
+                                                    <th class="text-center">Full Name</th>
+                                                    <th class="text-center">Birthday</th>
+                                                    <th class="text-center">Age</th>
+                                                    <th class="text-center">Sex</th>
+                                                    <th class="text-center">Strand</th>
                                                     <th class="text-center">Guardian</th>
-                                                    <th class="text-center filter-false sorter-false">phone</th>
-                                                    <th class="text-center filter-false sorter-false">actions</th>
+                                                    <th class="text-center filter-false sorter-false">Phone</th>
+                                                    <th class="text-center filter-false sorter-false">Actions</th>
                                                 </tr>
                                             </thead>
                                             <tbody class="text-center">
-                                                    <?php include_once 'functions/view-students.php';?>
+                                                <?php include_once 'functions/students-list.php'; ?>
                                             </tbody>
                                         </table>
                                     </div>
@@ -243,10 +249,12 @@ include_once "functions/authentication.php";
                                 <h3 class="text-dark mb-4">Violation List</h3>
                             </div>
                             <div class="col">
-                                <form action="functions/violation-search.php" method="post">
-                                    <div class="input-group"><span class="input-group-text">Student ID</span>
-                                        <input class="form-control" type="text" name="student_id"/>
-                                        <button class="btn btn-primary" type="submit">Search</button></div> 
+                                <form id="search-form2" method="POST">
+                                    <div class="input-group">
+                                        <span class="input-group-text">Student</span>
+                                        <input class="form-control"  type="text" name="student_id" pattern="^(?!\s).*$">
+                                        <button class="btn btn-primary" type="submit">Search</button>
+                                    </div>
                                 </form>
                             </div>
                         </div>
@@ -254,7 +262,7 @@ include_once "functions/authentication.php";
                             <div class="row">
                                 <div class="col-12">
                                     <div class="table-responsive">
-                                        <table class="table table-striped table tablesorter" id="ipi-table">
+                                        <table class="table table-striped table tablesorter" id="ipi-table2">
                                             <thead class="thead-dark">
                                                 <tr>
                                                     <th class="text-center">VIOLATION&nbsp;id</th>
@@ -271,7 +279,7 @@ include_once "functions/authentication.php";
                                                 </tr>
                                             </thead>
                                             <tbody class="text-center">
-                                                <?php include_once 'functions/view-violations.php';?>
+                                                <?php include_once 'functions/violations-list.php';?>
                                             </tbody>
                                         </table>
                                     </div>
@@ -284,6 +292,55 @@ include_once "functions/authentication.php";
             </div>
         </div>
     </div>
+    <div class="modal fade" role="dialog" tabindex="-1" id="profile">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Student Violations</h4><button class="btn-close" type="button" aria-label="Close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12 col-sm-6 col-md-6">
+                                <h3 class="text-dark mb-4">Violation List</h3>
+                            </div>
+                        </div>
+                        <div class="card" id="print_data">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped table tablesorter" id="ipi-table3">
+                                            <thead class="thead-dark">
+                                                <tr>
+                                                    <th class="text-center">VIOLATION&nbsp;id</th>
+                                                    <th class="text-center">student id</th>
+                                                    <th class="text-center">fullname</th>
+                                                    <th class="text-center">age</th>
+                                                    <th class="text-center">sex</th>
+                                                    <th class="text-center">strand</th>
+                                                    <th class="text-center">Guardian</th>
+                                                    <th class="text-center filter-false sorter-false">phone</th>
+                                                    <th class="text-center filter-false sorter-false">type</th>
+                                                    <th class="text-center filter-false sorter-false">offense</th>
+                                                    <th class="text-center filter-false sorter-false">level</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="text-center">
+                                                
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn-primary" type="button" data-bs-dismiss="modal" id="print">Print</button>
+                <div class="modal-footer"><button class="btn btn-light" type="button" data-bs-dismiss="modal">Close</button></div>
+            </div>
+        </div>
+    </div>
+
     <div class="modal fade" role="dialog" tabindex="-1" id="confirmation">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -302,6 +359,86 @@ include_once "functions/authentication.php";
     </div>
     <script src="assets/js/jquery.min.js"></script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/js/sweetalert.min.js"></script>
+    <script>
+        const url = window.location.href;
+
+        if (url.indexOf("#success") > -1) {
+        swal("Success", "GMS - Guidance Monitoring System", "success");
+        }
+
+        if (url.indexOf("#error") > -1) {
+        swal("Error", "GMS - Guidance Monitoring System", "error");
+        }
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            // When the search form is submitted
+            $('#search-form').submit(function(event) {
+                event.preventDefault(); // Prevent default form submission
+
+                // Send AJAX request to retrieve filtered data
+                $.ajax({
+                    url: 'functions/view-students.php',
+                    type: 'POST',
+                    data: $(this).serialize(),
+                    success: function(response) { // Update table with filtered data
+                        $('#ipi-table tbody').html(response);
+                    }
+                });
+            });
+
+            $('#search-form2').submit(function(event) {
+                event.preventDefault(); // Prevent default form submission
+        
+                // Send AJAX request to retrieve filtered data
+                $.ajax({
+                    url: 'functions/view-violations.php',
+                    type: 'POST',
+                    data: $(this).serialize(),
+                    success: function(response) { // Update table with filtered data
+                        $('#ipi-table2 tbody').html(response);
+                    }
+                });
+            });
+
+            $('a[data-bs-target="#profile"]').on('click', function() {
+                var id = $(this).data('id');
+                console.log(id);
+                $.ajax({
+                    url: 'functions/student-profile.php',
+                    type: 'POST',
+                    data: {
+                        id: id
+                    },
+                    success: function(response) { // Update table with filtered data
+                        $('#ipi-table3 tbody').html(response);
+                    }
+                });
+            });
+        });
+
+        function printTable() {
+        // Get the table data
+        var tableData = $("#print_data").html();
+
+        // Create a new window
+        var win = window.open("about:blank");
+
+        // Set the window's content
+        win.document.write('<html><head><link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">' +
+                           '<style>table {border-collapse: collapse; width: 100%;}' +
+                           'th, td {border: 1px solid black; padding: 8px; text-align: left;}' +
+                           'th {background-color: #dddddd;}</style></head><body>' +
+                           tableData + '</body></html>');
+
+        // Print the window
+        win.print();
+    }
+        // Attach the print event to the print button
+        $("#print").on("click", printTable);
+    </script>
     <script>
         $('a[data-bs-target="#update"]').on('click', function() {
             var id = $(this).data('id');
@@ -331,7 +468,7 @@ include_once "functions/authentication.php";
                 $(this).val(age);
             });
 
-            $('input[name="gender"]').each(function() {
+            $('select[name="gender"]').each(function() {
                 $(this).val(sex);
             });
 

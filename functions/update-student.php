@@ -34,7 +34,7 @@ $statement->bindParam(':id', $id);
 $statement->execute();
 
 // redirect to the dashboard after updating the student
-header('Location: ../dashboard.php');
+header('Location: ../dashboard.php#success');
 exit();
 
 ?>

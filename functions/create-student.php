@@ -6,11 +6,12 @@ $db = new PDO('mysql:host=localhost;dbname=db_hashers', 'root', '');
 $fullname = $_POST['fullname'];
 $id = $_POST['student_id'];
 $birthday = $_POST['birthday'];
-$age = $_POST['age'];
 $sex = $_POST['gender'];
 $strand = $_POST['strand'];
 $guardian_name = $_POST['guardian_name'];
 $phone = $_POST['guardian_phone'];
+// get the age from the birthday
+$age =  date_diff(date_create($birthday), date_create('today'))->y;
 
 // check if the student already exists
 $sql = "SELECT * FROM students WHERE fullname = :fullname";
@@ -41,6 +42,6 @@ else {
     $statement->execute();
 
     // redirect to the index page after adding the student
-    header('Location: ../dashboard.php');
+    header('Location: ../dashboard.php#success');
     exit();
 }

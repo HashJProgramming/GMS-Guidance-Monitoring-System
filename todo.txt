@@ -1,0 +1,16 @@
+[Forms] - Required
+[AUTO GET AGE] - By birthdate
+[SEX]  -  Select
+[Strand] - Select
+[Phone] - Number limit integer 13
+[Alert] - Wrong password, insert - update - delete data, Search if student id is not exist
+[Add] - Required - Unique Name and ID
+[Ajax] - Instead of new page the data result will appear inside the table
+
+Page:
+[View Student Profile] - Personal Info, Violations
+[Print Student Record]
+
+Alter table
+Level = integer (1 2 3 4 5)
+
