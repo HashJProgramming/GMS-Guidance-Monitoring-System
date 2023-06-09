@@ -14,14 +14,15 @@ $phone = $_POST['guardian_phone'];
 $age =  date_diff(date_create($birthday), date_create('today'))->y;
 
 // check if the student already exists
-$sql = "SELECT * FROM students WHERE fullname = :fullname";
+$sql = "SELECT * FROM students WHERE fullname = :fullname AND id = :id";
 $statement = $db->prepare($sql);
 $statement->bindParam(':fullname', $fullname);
+$statement->bindParam(':id', $id);
 $statement->execute();
 
 // if the student already exists, redirect to the index page
 if ($statement->fetchColumn() > 0) {
-    header('Location: index.php');
+    header('Location: dashboard.php#error');
     exit();
 }
 
